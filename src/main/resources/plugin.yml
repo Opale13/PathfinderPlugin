@@ -1,0 +1,9 @@
+main: com.ludovic.Main
+name: PathfinderRPG
+version: 1.0
+author: Ludovic Merel
+commands:
+  roll:
+    description: Run a dice and get the value
+  setRole:
+    description: Set a role of player
