@@ -1,8 +1,9 @@
 package com.ludovic.config;
 
 import com.ludovic.Main;
-import com.ludovic.role.Role;
-import com.ludovic.role.RoleEnum;
+import com.ludovic.character.Character;
+import com.ludovic.character.Role;
+import com.ludovic.character.RoleEnum;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -35,10 +36,19 @@ public class Config {
      * @param player
      */
     public static void loadPlayer(Player player) {
+        Character character;
         String uuid = player.getUniqueId().toString();
-        int idRole = config.getInt(uuid);
 
-        Main.players.put(uuid, Role.getRoleById(idRole));
+        if (config.get(uuid) == null) {
+            character = new Character(1, 0, 0, player.getName());
+            character.setRole(RoleEnum.PLAYER);
+            config.set(uuid, character);
+            saveConfig();
+        }
+
+        character = (Character) config.get(uuid);
+
+        Main.players.put(uuid, character);
     }
 
     /**
@@ -48,8 +58,11 @@ public class Config {
      */
     public static void changeRole(Player player, RoleEnum role) {
         String uuid = player.getUniqueId().toString();
-        config.set(uuid, role.getId());
-        Main.players.put(uuid, role);
+        Character character = (Character) config.get(uuid);
+        character.setRole(role);
+
+        config.set(uuid, character);
+        Main.players.put(uuid, character);
 
         saveConfig();
     }
@@ -60,6 +73,12 @@ public class Config {
      * @return
      */
     public static RoleEnum getPlayersRole(Player player) {
+        String uuid = player.getUniqueId().toString();
+
+        return Main.players.get(uuid).getRole();
+    }
+
+    public static Character getPlayerCharachter(Player player) {
         String uuid = player.getUniqueId().toString();
 
         return Main.players.get(uuid);

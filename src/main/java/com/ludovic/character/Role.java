@@ -1,4 +1,4 @@
-package com.ludovic.role;
+package com.ludovic.character;
 
 public class Role {
 

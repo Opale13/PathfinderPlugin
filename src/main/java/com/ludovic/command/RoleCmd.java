@@ -2,7 +2,7 @@ package com.ludovic.command;
 
 import com.google.common.collect.Lists;
 import com.ludovic.config.Config;
-import com.ludovic.role.RoleEnum;
+import com.ludovic.character.RoleEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

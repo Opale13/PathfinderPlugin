@@ -1,7 +1,8 @@
 package com.ludovic.listener;
 
 import com.ludovic.config.Config;
-import com.ludovic.role.RoleEnum;
+import com.ludovic.character.RoleEnum;
+import com.ludovic.gui.stat.StatGui;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +22,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     private void playerJoin(PlayerJoinEvent event) {
         Config.loadPlayer(event.getPlayer());
+        StatGui.updateScoreboard(event.getPlayer());
     }
 
     /**

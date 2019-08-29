@@ -1,7 +1,8 @@
 package com.ludovic.command;
 
 import com.ludovic.Main;
-import com.ludovic.role.RoleEnum;
+import com.ludovic.character.RoleEnum;
+import com.ludovic.character.Character;
 import joptsimple.ValueConversionException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -37,7 +38,7 @@ public class DiceCmd implements CommandExecutor {
         Matcher matcher = dicePattern.matcher(args[0]);
 
         Player player = Bukkit.getPlayer(commandSender.getName());
-        RoleEnum role = Main.players.get(player.getUniqueId().toString());
+        RoleEnum role = Main.players.get(player.getUniqueId().toString()).getRole();
 
         // total of the roll
         int numberGenerate = 0;
