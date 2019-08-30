@@ -11,11 +11,12 @@ public class Character {
     private String name;
     private RoleEnum role;
 
-    public Character(int level, int life, int init, String name) {
+    public Character(int level, int life, int init, String name, RoleEnum role) {
         this.level = level;
         this.life = life;
         this.init = init;
         this.name = name;
+        this.role = role;
     }
 
     public int getLevel() {

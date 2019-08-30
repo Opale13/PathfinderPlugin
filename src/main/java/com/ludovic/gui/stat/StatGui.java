@@ -3,6 +3,7 @@ package com.ludovic.gui.stat;
 import com.ludovic.character.Character;
 import com.ludovic.config.Config;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -29,7 +30,7 @@ public class StatGui {
         player.sendMessage(character.getName());
         String uuid = player.getUniqueId().toString();
 
-        scores.put(uuid, objective.getScore(character.getName() + " Life "));
+        scores.put(uuid, objective.getScore(character.getRole().getPrefix() + ChatColor.RESET + " Life: " + character.getLife()));
         scores.get(uuid).setScore(scores.size());
 
         for (Player player1 : Bukkit.getOnlinePlayers()) {

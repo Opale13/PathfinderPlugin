@@ -17,11 +17,11 @@ public class Main extends JavaPlugin {
 
     @Override
     public final void onLoad() {
-        Config.initConfig();
     }
 
     @Override
     public final void onEnable() {
+        Config.initConfig();
         StatGui.initScoreboard();
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
