@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 public class Config {
     private static FileConfiguration config;
@@ -73,10 +72,10 @@ public class Config {
      * @return
      */
     public static RoleEnum getPlayersRole(Player player) {
-        return getPlayerCharachter(player).getRole();
+        return getPlayerCharacter(player).getRole();
     }
 
-    public static Character getPlayerCharachter(Player player) {
+    public static Character getPlayerCharacter(Player player) {
         String uuid = player.getUniqueId().toString();
 
         return Main.players.get(uuid);
@@ -88,7 +87,7 @@ public class Config {
      */
     public static void deletePlayer(Player player) {
         String uuid = player.getUniqueId().toString();
-        Character character = getPlayerCharachter(player);
+        Character character = getPlayerCharacter(player);
 
         saveDataPlayer(player, character);
         saveConfig();
