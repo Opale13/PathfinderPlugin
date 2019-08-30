@@ -2,6 +2,7 @@ package com.ludovic;
 
 import com.ludovic.character.Character;
 import com.ludovic.command.DiceCmd;
+import com.ludovic.command.ReloadConfigCmd;
 import com.ludovic.command.RoleCmd;
 import com.ludovic.config.Config;
 import com.ludovic.gui.stat.StatGui;
@@ -28,6 +29,7 @@ public class Main extends JavaPlugin {
 
         getCommand("roll").setExecutor(new DiceCmd());
         getCommand("setRole").setExecutor(new RoleCmd());
+        getCommand("reloadConfig").setExecutor(new ReloadConfigCmd());
     }
 
     @Override

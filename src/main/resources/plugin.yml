@@ -7,3 +7,5 @@ commands:
     description: Run a dice and get the value
   setRole:
     description: Set a role of player
+  reloadConfig:
+    description: Reload the config file

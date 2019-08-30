@@ -3,6 +3,7 @@ package com.ludovic.config;
 import com.ludovic.Main;
 import com.ludovic.character.Character;
 import com.ludovic.character.RoleEnum;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -41,7 +42,6 @@ public class Config {
         String uuid = player.getUniqueId().toString();
 
         if (config.getString(uuid + ".name") == null) {
-            player.sendMessage("in if");
             character = new Character(1, 0, 0, player.getName(), RoleEnum.PLAYER);
             saveDataPlayer(player, character);
         }
@@ -104,6 +104,16 @@ public class Config {
         try{
             config.save(file);
         } catch(IOException ioe){ioe.printStackTrace();}
+    }
+
+    public static void reloadConfig() {
+        config = YamlConfiguration.loadConfiguration(file);
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            loadPlayer(player);
+        }
+
+        // TODO reload scoreboard
     }
 
 
