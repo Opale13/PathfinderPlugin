@@ -16,10 +16,10 @@ public class RoleCmd implements CommandExecutor, TabCompleter {
 
     /**
      * Command to change the role off one player
-     * @param commandSender
-     * @param command
-     * @param s
-     * @param args
+     * @param commandSender The player which run the command
+     * @param command The run command
+     * @param s idk
+     * @param args The args of the command
      * @return
      */
     @Override

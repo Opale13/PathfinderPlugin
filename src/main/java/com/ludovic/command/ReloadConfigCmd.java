@@ -7,6 +7,14 @@ import org.bukkit.command.CommandSender;
 
 public class ReloadConfigCmd implements CommandExecutor {
 
+    /**
+     * Reload the configuration file
+     * @param commandSender The player which run the command
+     * @param command The run command
+     * @param s idk
+     * @param args The args of the command
+     * @return
+     */
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 

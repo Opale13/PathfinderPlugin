@@ -3,6 +3,7 @@ package com.ludovic.config;
 import com.ludovic.Main;
 import com.ludovic.character.Character;
 import com.ludovic.character.RoleEnum;
+import com.ludovic.gui.stat.StatGui;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -34,7 +35,7 @@ public class Config {
 
     /**
      * Load the player into players list
-     * @param player
+     * @param player The player connected
      */
     public static void loadPlayer(Player player) {
         Character character;
@@ -53,8 +54,8 @@ public class Config {
 
     /**
      * Allows to change the role of one player
-     * @param player
-     * @param role
+     * @param player Player target
+     * @param role Role target
      */
     public static void changeRole(Player player, RoleEnum role) {
         String uuid = player.getUniqueId().toString();
@@ -62,32 +63,21 @@ public class Config {
         character.setRole(role);
 
         Main.players.put(uuid, character);
+        saveDataPlayer(player, character);
+        saveConfig();
 
-        // TODO reload scoreboard
+        StatGui.reloadScoreboard(player);
     }
 
-    /**
-     * Allows to get the role of one player
-     * @param player
-     * @return
-     */
-    public static RoleEnum getPlayersRole(Player player) {
-        return getPlayerCharacter(player).getRole();
-    }
 
-    public static Character getPlayerCharacter(Player player) {
-        String uuid = player.getUniqueId().toString();
-
-        return Main.players.get(uuid);
-    }
 
     /**
      * Delete a player into config file
-     * @param player
+     * @param player The player target
      */
     public static void deletePlayer(Player player) {
         String uuid = player.getUniqueId().toString();
-        Character character = getPlayerCharacter(player);
+        Character character = Main.getPlayerCharacter(player);
 
         saveDataPlayer(player, character);
         saveConfig();
@@ -105,18 +95,24 @@ public class Config {
         } catch(IOException ioe){ioe.printStackTrace();}
     }
 
+    /**
+     * Reload the configuration file
+     */
     public static void reloadConfig() {
         config = YamlConfiguration.loadConfiguration(file);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             loadPlayer(player);
+            StatGui.reloadScoreboard(player);
         }
-
-        // TODO reload scoreboard
     }
 
 
-
+    /**
+     * Return the player character in the config file
+     * @param player The player target
+     * @return
+     */
     private static Character getDataPlayer(Player player) {
         String uuid = player.getUniqueId().toString();
 
@@ -129,6 +125,11 @@ public class Config {
         return new Character(level, life, init, name, role);
     }
 
+    /**
+     * Set the player character in the config file
+     * @param player The player target
+     * @param character The character at save
+     */
     private static void saveDataPlayer(Player player, Character character) {
         String uuid = player.getUniqueId().toString();
 

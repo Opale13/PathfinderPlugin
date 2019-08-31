@@ -23,10 +23,10 @@ public class DiceCmd implements CommandExecutor {
 
     /**
      * When someone role a dice, we return the value
-     * @param commandSender
-     * @param command
-     * @param s
-     * @param args
+     * @param commandSender The player which run the command
+     * @param command The run command
+     * @param s idk
+     * @param args The args of the command
      * @return
      */
     @Override
