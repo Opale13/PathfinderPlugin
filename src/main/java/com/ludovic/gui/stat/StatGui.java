@@ -72,6 +72,8 @@ public class StatGui {
         Score score = scores.get(uuid);
         score.setScore(scorePlace);
 
+        // TODO sort character by init
+
         // Update the scoreboard for all players connected
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.setScoreboard(scoreboard);

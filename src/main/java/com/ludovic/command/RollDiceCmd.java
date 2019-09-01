@@ -31,34 +31,39 @@ public class RollDiceCmd implements CommandExecutor {
         RoleEnum role = Main.players.get(player.getUniqueId().toString()).getRole();
         int numberGenerate = 0;
 
-        try {
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
-            Bukkit.broadcastMessage(ChatColor.AQUA + "                 ROLL                   ");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
-            Bukkit.broadcastMessage(role.getColor() + role.getPrefix() + " " + player.getName() +
-                    ChatColor.RESET + " Roll");
-            Bukkit.broadcastMessage("");
+        if (commandSender instanceof Player && args.length > 0) {
+            try {
+                Bukkit.broadcastMessage("");
+                Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
+                Bukkit.broadcastMessage(ChatColor.AQUA + "                 ROLL                   ");
+                Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
+                Bukkit.broadcastMessage(role.getColor() + role.getPrefix() + " " + player.getName() +
+                        ChatColor.RESET + " Roll");
+                Bukkit.broadcastMessage("");
 
-            numberGenerate = dice.computeDice(dice, args[0]);
+                numberGenerate = dice.computeDice(dice, args[0]);
 
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage("Result: " + numberGenerate);
-            return true;
+                Bukkit.broadcastMessage("");
+                Bukkit.broadcastMessage("Result: " + numberGenerate);
+                return true;
 
-        } catch (Exception e) {
-            commandSender.sendMessage(e.getMessage());
+            } catch (Exception e) {
+                commandSender.sendMessage(e.getMessage());
+                Bukkit.broadcastMessage("");
+                return false;
 
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage("Error rolling");
-            return false;
+            } finally {
+                Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
+                Bukkit.broadcastMessage(ChatColor.AQUA + "                END ROLL                ");
+                Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
+                Bukkit.broadcastMessage("");
+            }
 
-        } finally {
-            Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
-            Bukkit.broadcastMessage(ChatColor.AQUA + "                END ROLL                ");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
-            Bukkit.broadcastMessage("");
+        } else {
+            commandSender.sendMessage("/roll (# of dice)d<# of faces>(+ or -)(mod)");
         }
+
+        return true;
 
     }
 }

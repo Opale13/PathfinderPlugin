@@ -29,7 +29,7 @@ public class InitCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
 
-        if (commandSender instanceof Player) {
+        if (commandSender instanceof Player && args.length > 0) {
             Player player = ((Player) commandSender).getPlayer();
             RoleEnum role = Main.getPlayerRole(player);
             int init = 0;
@@ -43,7 +43,7 @@ public class InitCmd implements CommandExecutor {
                         ChatColor.RESET + " Roll init");
                 Bukkit.broadcastMessage("");
 
-                init = dice.computeDice(dice, "d20+" + args[0]);
+                init = dice.computeDice(dice, "d20" + args[0]);
                 Config.changeInit(player, init);
 
                 Bukkit.broadcastMessage("");
@@ -53,7 +53,6 @@ public class InitCmd implements CommandExecutor {
             } catch (Exception e) {
                 commandSender.sendMessage(e.getMessage());
                 Bukkit.broadcastMessage("");
-                Bukkit.broadcastMessage("Error rolling");
                 return false;
 
             } finally {
@@ -64,6 +63,8 @@ public class InitCmd implements CommandExecutor {
             }
 
 
+        } else {
+            commandSender.sendMessage("/init <+/- mod>");
         }
 
         return true;

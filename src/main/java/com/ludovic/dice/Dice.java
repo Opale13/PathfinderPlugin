@@ -41,7 +41,7 @@ public class Dice {
             // Roll the dice
             try {
                 dice.rollDice(diceNumber, Integer.parseInt(matcher.group(2)));
-            } catch (ValueConversionException e) {
+            } catch (Exception e) {
                 throw new Exception("Can't convert \" + matcher.group(2) + \" into number");
             }
 
@@ -53,11 +53,11 @@ public class Dice {
             } else {
                 try {
                     numberGenerate = dice.computeMod(Integer.parseInt(matcher.group(4)), matcher.group(3));
-                } catch (ValueConversionException e) { throw new Exception("Can't convert " + matcher.group(2) + " into number"); }
+                } catch (Exception e) { throw new Exception("Can't convert " + matcher.group(2) + " into number"); }
             }
 
         } else {
-            throw new Exception("/roll (# of dice)d<# of faces>(+ or -)(mod)");
+            throw new Exception("Wrong use");
         }
 
         return numberGenerate;
