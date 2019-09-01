@@ -3,6 +3,7 @@ package com.ludovic.command;
 import com.ludovic.Main;
 import com.ludovic.character.RoleEnum;
 import com.ludovic.character.Character;
+import com.ludovic.dice.Dice;
 import joptsimple.ValueConversionException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,8 +19,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RollDiceCmd implements CommandExecutor {
-    private Random random = new Random();
-    private List<Integer> diceRoll = new ArrayList<Integer>();
+    private Dice dice;
+
+    public RollDiceCmd() {
+        dice = new Dice();
+    }
 
     /**
      * When someone role a dice, we return the value
@@ -31,10 +35,9 @@ public class RollDiceCmd implements CommandExecutor {
      */
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        this.diceRoll.clear();
+        dice.clearDiceRoll();
 
-        String pattern = "([0-9]{0,3})d([0-9]{1,3})([\\+-]?)([0-9]{1,3})?";
-        Pattern dicePattern = Pattern.compile(pattern);
+        Pattern dicePattern = Pattern.compile(dice.getDicePattern());
         Matcher matcher = dicePattern.matcher(args[0]);
 
         Player player = Bukkit.getPlayer(commandSender.getName());
@@ -60,19 +63,19 @@ public class RollDiceCmd implements CommandExecutor {
                                     ChatColor.RESET + " Roll");
             Bukkit.broadcastMessage("");
 
+            // Roll the dice
             try {
-                rollDice(diceNumber, Integer.parseInt(matcher.group(2)));
+                dice.rollDice(diceNumber, Integer.parseInt(matcher.group(2)));
             } catch (ValueConversionException e) { commandSender .sendMessage("Can't convert " + matcher.group(2) + " into number"); }
-
 
             // Without mod like /roll 8d8
             if (matcher.group(3).equals("")) {
-                numberGenerate = computeDice(0, "+");
+                numberGenerate = dice.computeMod(0, "+");
 
             // With mod like /roll 8d8+5
             } else {
                 try {
-                    numberGenerate = computeDice(Integer.parseInt(matcher.group(4)), matcher.group(3));
+                    numberGenerate = dice.computeMod(Integer.parseInt(matcher.group(4)), matcher.group(3));
                 } catch (ValueConversionException e) { commandSender .sendMessage("Can't convert " + matcher.group(2) + " into number"); }
             }
 
@@ -91,46 +94,5 @@ public class RollDiceCmd implements CommandExecutor {
         }
 
         return true;
-    }
-
-
-    /**
-     * Compute a random number between 1 and the dice's number
-     * @param diceNumber
-     * @return
-     */
-    private void rollDice(int rollNumber, int diceNumber) {
-        for (int i = 0; i < rollNumber; i++) {
-            this.diceRoll.add(random.nextInt((diceNumber - 1) + 1) + 1);
-
-            Bukkit.broadcastMessage("Roll " + "d" + diceNumber + ": " + this.diceRoll.get(i));
-        }
-    }
-
-    /**
-     * Add or remove the mod at the rollDice
-     * @param mod
-     * @param sign
-     * @return
-     */
-    private Integer computeDice(int mod, String sign) {
-        int computeNumber = 0;
-
-        for (int dice : this.diceRoll) {
-            computeNumber += dice;
-        }
-
-        switch (sign) {
-            case "+":
-                Bukkit.broadcastMessage("Add mod: " + computeNumber + " + " + mod);
-                computeNumber += mod;
-                break ;
-            case "-":
-                Bukkit.broadcastMessage("Remove mod: " + computeNumber + " - " + mod);
-                computeNumber -= mod;
-                break;
-        }
-
-        return computeNumber;
     }
 }
