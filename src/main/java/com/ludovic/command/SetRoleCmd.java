@@ -40,6 +40,8 @@ public class SetRoleCmd implements CommandExecutor, TabCompleter {
         }
 
         Config.changeRole(target, role);
+        commandSender.sendMessage("The role has been change");
+        target.sendMessage("Your role has been change in " + role.getName());
 
         return true;
     }

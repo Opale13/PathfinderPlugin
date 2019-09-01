@@ -1,10 +1,16 @@
 package com.ludovic.dice;
 
+import com.ludovic.character.RoleEnum;
+import joptsimple.ValueConversionException;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Dice {
     private Random random = new Random();
@@ -17,12 +23,53 @@ public class Dice {
     public Dice() {
     }
 
+    public int computeDice(Dice dice, Player player, RoleEnum role, String diceArgs) throws Exception {
+        Pattern dicePattern = Pattern.compile(dice.getDicePattern());
+        Matcher matcher = dicePattern.matcher(diceArgs);
+
+        // Total generate diceRolls + mod
+        int numberGenerate = 0;
+
+        // Number od dice - #d
+        int diceNumber = 1;
+
+        if (matcher.matches()) {
+            if (!matcher.group(1).equals("")) {
+                diceNumber = Integer.parseInt(matcher.group(1));
+                player.sendMessage("dicenumber: " + diceNumber);
+            }
+
+            // Roll the dice
+            try {
+                dice.rollDice(diceNumber, Integer.parseInt(matcher.group(2)));
+            } catch (ValueConversionException e) {
+                throw new Exception("Can't convert \" + matcher.group(2) + \" into number");
+            }
+
+            // Without mod like /roll 8d8
+            if (matcher.group(3).equals("")) {
+                numberGenerate = dice.computeMod(0, "+");
+
+            // With mod like /roll 8d8+5
+            } else {
+                try {
+                    numberGenerate = dice.computeMod(Integer.parseInt(matcher.group(4)), matcher.group(3));
+                } catch (ValueConversionException e) { throw new Exception("Can't convert " + matcher.group(2) + " into number"); }
+            }
+
+        } else {
+            throw new Exception("/roll (# of dice)d<# of faces>(+ or -)(mod)");
+        }
+
+        return numberGenerate;
+    }
+
     /**
      * Compute a random number between 1 and the dice's number
      * @param diceNumber
      * @return
      */
-    public void rollDice(int rollNumber, int diceNumber) {
+    private void rollDice(int rollNumber, int diceNumber) {
         for (int i = 0; i < rollNumber; i++) {
             this.diceRoll.add(random.nextInt((diceNumber - 1) + 1) + 1);
 
@@ -36,7 +83,7 @@ public class Dice {
      * @param sign
      * @return
      */
-    public Integer computeMod(int mod, String sign) {
+    private Integer computeMod(int mod, String sign) {
         int computeNumber = 0;
 
         for (int dice : this.diceRoll) {
@@ -54,14 +101,8 @@ public class Dice {
                 break;
         }
 
-        return computeNumber;
-    }
-
-    /**
-     * Clear the dice list
-     */
-    public void clearDiceRoll() {
         diceRoll.clear();
+        return computeNumber;
     }
 
     /**
