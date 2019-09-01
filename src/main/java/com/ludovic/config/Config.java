@@ -69,6 +69,18 @@ public class Config {
         StatGui.reloadScoreboard(player);
     }
 
+    public static void changeInit(Player player, int init) {
+        String uuid = player.getUniqueId().toString();
+        Character character = Main.players.get(uuid);
+        character.setInit(init);
+
+        Main.players.put(uuid, character);
+        saveDataPlayer(player, character);
+        saveConfig();
+
+        StatGui.reloadScoreboard(player);
+    }
+
 
 
     /**

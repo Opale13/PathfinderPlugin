@@ -9,3 +9,5 @@ commands:
     description: Set a role of player
   reloadConfig:
     description: Reload the config file
+  init:
+    description: Set the init player

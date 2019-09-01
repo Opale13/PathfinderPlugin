@@ -23,7 +23,7 @@ public class Dice {
     public Dice() {
     }
 
-    public int computeDice(Dice dice, Player player, RoleEnum role, String diceArgs) throws Exception {
+    public int computeDice(Dice dice, String diceArgs) throws Exception {
         Pattern dicePattern = Pattern.compile(dice.getDicePattern());
         Matcher matcher = dicePattern.matcher(diceArgs);
 
@@ -36,7 +36,6 @@ public class Dice {
         if (matcher.matches()) {
             if (!matcher.group(1).equals("")) {
                 diceNumber = Integer.parseInt(matcher.group(1));
-                player.sendMessage("dicenumber: " + diceNumber);
             }
 
             // Roll the dice

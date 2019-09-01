@@ -13,8 +13,8 @@ import org.bukkit.entity.Player;
 public class RollDiceCmd implements CommandExecutor {
     private Dice dice;
 
-    public RollDiceCmd() {
-        dice = new Dice();
+    public RollDiceCmd(Dice dice) {
+        this.dice = dice;
     }
 
     /**
@@ -40,7 +40,7 @@ public class RollDiceCmd implements CommandExecutor {
                     ChatColor.RESET + " Roll");
             Bukkit.broadcastMessage("");
 
-            numberGenerate = dice.computeDice(dice, player, role, args[0]);
+            numberGenerate = dice.computeDice(dice, args[0]);
 
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("Result: " + numberGenerate);

@@ -41,7 +41,7 @@ public class PlayerListener implements Listener {
      */
     @EventHandler
     private void playerChat(AsyncPlayerChatEvent event){
-        RoleEnum role = Main.getPlayersRole(event.getPlayer());
+        RoleEnum role = Main.getPlayerRole(event.getPlayer());
         event.setFormat(role.getColor() + role.getPrefix() + " " + event.getPlayer().getName() + " " + ChatColor.RESET + event.getMessage());
     }
 
