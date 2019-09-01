@@ -2,9 +2,9 @@ package com.ludovic;
 
 import com.ludovic.character.Character;
 import com.ludovic.character.RoleEnum;
-import com.ludovic.command.DiceCmd;
+import com.ludovic.command.RollDiceCmd;
 import com.ludovic.command.ReloadConfigCmd;
-import com.ludovic.command.RoleCmd;
+import com.ludovic.command.SetRoleCmd;
 import com.ludovic.config.Config;
 import com.ludovic.gui.stat.StatGui;
 import com.ludovic.listener.PlayerListener;
@@ -29,8 +29,8 @@ public class Main extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
-        getCommand("roll").setExecutor(new DiceCmd());
-        getCommand("setRole").setExecutor(new RoleCmd());
+        getCommand("roll").setExecutor(new RollDiceCmd());
+        getCommand("setRole").setExecutor(new SetRoleCmd());
         getCommand("reloadConfig").setExecutor(new ReloadConfigCmd());
     }
 

@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DiceCmd implements CommandExecutor {
+public class RollDiceCmd implements CommandExecutor {
     private Random random = new Random();
     private List<Integer> diceRoll = new ArrayList<Integer>();
 

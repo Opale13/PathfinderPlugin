@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class RoleCmd implements CommandExecutor, TabCompleter {
+public class SetRoleCmd implements CommandExecutor, TabCompleter {
 
     /**
      * Command to change the role off one player
