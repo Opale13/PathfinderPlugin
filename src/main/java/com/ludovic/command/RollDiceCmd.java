@@ -31,7 +31,7 @@ public class RollDiceCmd implements CommandExecutor {
         RoleEnum role = Main.players.get(player.getUniqueId().toString()).getRole();
         int numberGenerate = 0;
 
-        if (commandSender instanceof Player && args.length > 0) {
+        if (commandSender instanceof Player) {
             try {
                 Bukkit.broadcastMessage("");
                 Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
@@ -41,7 +41,12 @@ public class RollDiceCmd implements CommandExecutor {
                         ChatColor.RESET + " Roll");
                 Bukkit.broadcastMessage("");
 
-                numberGenerate = dice.computeDice(dice, args[0]);
+                if (args.length == 0) {
+                    numberGenerate = dice.computeDice(dice, "d20");
+
+                } else {
+                    numberGenerate = dice.computeDice(dice, args[0]);
+                }
 
                 Bukkit.broadcastMessage("");
                 Bukkit.broadcastMessage("Result: " + numberGenerate);
