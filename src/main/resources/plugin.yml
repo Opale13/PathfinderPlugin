@@ -11,3 +11,5 @@ commands:
     description: Reload the config file
   init:
     description: Set the init player
+  life:
+    description: Set the life player

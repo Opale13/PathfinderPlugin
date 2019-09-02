@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Config {
     private static FileConfiguration config;
@@ -80,6 +82,28 @@ public class Config {
 
         StatGui.reloadScoreboard(player);
     }
+
+    public static void changeLife(Player player, int modLife, String sign) {
+        String uuid = player.getUniqueId().toString();
+        Character character = Main.players.get(uuid);
+        int life = character.getLife();
+
+        switch (sign) {
+            case "+":
+                character.setLife(life+modLife);
+                break;
+            case "-":
+                character.setLife(life-modLife);
+                break;
+        }
+
+        Main.players.put(uuid, character);
+        saveDataPlayer(player, character);
+        saveConfig();
+
+        StatGui.reloadScoreboard(player);
+    }
+
 
 
 

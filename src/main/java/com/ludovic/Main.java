@@ -2,10 +2,7 @@ package com.ludovic;
 
 import com.ludovic.character.Character;
 import com.ludovic.character.RoleEnum;
-import com.ludovic.command.InitCmd;
-import com.ludovic.command.RollDiceCmd;
-import com.ludovic.command.ReloadConfigCmd;
-import com.ludovic.command.SetRoleCmd;
+import com.ludovic.command.*;
 import com.ludovic.config.Config;
 import com.ludovic.dice.Dice;
 import com.ludovic.gui.stat.StatGui;
@@ -34,6 +31,7 @@ public class Main extends JavaPlugin {
 
         getCommand("roll").setExecutor(new RollDiceCmd(dice));
         getCommand("init").setExecutor(new InitCmd(dice));
+        getCommand("life").setExecutor(new LifeCmd());
         getCommand("setRole").setExecutor(new SetRoleCmd());
         getCommand("reloadConfig").setExecutor(new ReloadConfigCmd());
     }
