@@ -12,9 +12,9 @@ public enum RoleEnum {
     DRUID(6, "Druid", ChatColor.DARK_GREEN),
     FIGHTER(7, "Fighter", ChatColor.DARK_GRAY),
     MONK(8, "Monk", ChatColor.GRAY),
-    RANGER(9, "Ranger",ChatColor.GREEN),
-    ROGUE(10, "Rogue",ChatColor.BLUE),
-    SORCERER(11, "Sorcerer",ChatColor.DARK_BLUE),
+    RANGER(9, "Ranger", ChatColor.GREEN),
+    ROGUE(10, "Rogue", ChatColor.BLUE),
+    SORCERER(11, "Sorcerer", ChatColor.DARK_BLUE),
     WIZARD(12, "Wizard", ChatColor.AQUA);
 
 
