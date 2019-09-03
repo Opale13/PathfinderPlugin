@@ -1,6 +1,7 @@
 package com.ludovic.listener;
 
 import com.ludovic.Main;
+import com.ludovic.character.Character;
 import com.ludovic.config.Config;
 import com.ludovic.character.RoleEnum;
 import com.ludovic.gui.stat.StatGui;
@@ -58,6 +59,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     private void playerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        Character character = Main.getPlayerCharacter(player);
 
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             ItemStack item = event.getItem();
@@ -91,6 +93,8 @@ public class PlayerListener implements Listener {
                 stand.setChestplate(chestPlate);
                 stand.setLeggings(leggings);
                 stand.setBoots(boots);
+                stand.setCustomNameVisible(true);
+                stand.setCustomName(character.getName());
             }
         }
 
