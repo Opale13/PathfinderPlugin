@@ -1,6 +1,8 @@
 package com.ludovic.utils;
 
 import com.ludovic.Main;
+import com.ludovic.character.Mob;
+import org.bukkit.Color;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,7 +35,21 @@ public class ReadJson {
 
         for (Object o : mobsList) {
             JSONObject mob = (JSONObject) o;
-            Main.mobList.add((String) mob.get("name"));
+            JSONArray rgb = (JSONArray) mob.get("color");
+
+            int red = ((Long) rgb.get(0)).intValue();
+            int green = ((Long) rgb.get(1)).intValue();
+            int blue = ((Long) rgb.get(2)).intValue();
+
+            Color color = Color.fromRGB(red, green, blue);
+
+            Main.mobList.add(new Mob((String) mob.get("name"),
+                    (String) mob.get("helmet"),
+                    (String) mob.get("chestplate"),
+                    (String) mob.get("leggings"),
+                    (String) mob.get("boots"),
+                    color,
+                    (String) mob.get("blockSet")));
         }
     }
 

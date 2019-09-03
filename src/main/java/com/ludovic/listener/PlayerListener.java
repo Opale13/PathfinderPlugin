@@ -2,8 +2,10 @@ package com.ludovic.listener;
 
 import com.ludovic.Main;
 import com.ludovic.character.Character;
+import com.ludovic.character.Mob;
 import com.ludovic.config.Config;
 import com.ludovic.gui.stat.StatGui;
+import com.ludovic.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
@@ -63,35 +65,17 @@ public class PlayerListener implements Listener {
             Block block = event.getClickedBlock();
 
             if (item.getType() == Material.ARMOR_STAND) {
-                ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
-                LeatherArmorMeta helmetMeta = (LeatherArmorMeta) helmet.getItemMeta();
-                helmetMeta.setColor(character.getColor());
-                helmet.setItemMeta(helmetMeta);
+                Utils.createArmorStand(player, block.getLocation(), character.getName(), character.getColor());
 
-                ItemStack chestPlate = new ItemStack(Material.LEATHER_CHESTPLATE);
-                LeatherArmorMeta chestplateMeta = (LeatherArmorMeta) chestPlate.getItemMeta();
-                chestplateMeta.setColor(character.getColor());
-                chestPlate.setItemMeta(chestplateMeta);
+            } else {
+                for (Mob mob : Main.mobList) {
+                    String blockSet = mob.getBlockSet();
 
-                ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
-                LeatherArmorMeta leggingsMeta = (LeatherArmorMeta) leggings.getItemMeta();
-                leggingsMeta.setColor(character.getColor());
-                leggings.setItemMeta(leggingsMeta);
-
-                ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
-                LeatherArmorMeta bootsMeta = (LeatherArmorMeta) boots.getItemMeta();
-                bootsMeta.setColor(character.getColor());
-                boots.setItemMeta(bootsMeta);
-
-                ArmorStand stand = (ArmorStand) player.getWorld().spawnEntity(block.getLocation().add(0.5,1, 0.5), EntityType.ARMOR_STAND);
-                stand.setVisible(true);
-                stand.setArms(true);
-                stand.setHelmet(helmet);
-                stand.setChestplate(chestPlate);
-                stand.setLeggings(leggings);
-                stand.setBoots(boots);
-                stand.setCustomNameVisible(true);
-                stand.setCustomName(character.getName());
+                    if (item.getType() == Material.valueOf(blockSet.toUpperCase())) {
+                        Utils.createArmorStand(player, block.getLocation(), mob.getName(), mob.getColor());
+                        event.setCancelled(true);
+                    }
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 package com.ludovic;
 
 import com.ludovic.character.Character;
+import com.ludovic.character.Mob;
 import com.ludovic.command.*;
 import com.ludovic.config.Config;
 import com.ludovic.dice.Dice;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 public class Main extends JavaPlugin {
     public static Map<String, Character> players = new HashMap<String, Character>();
-    public static List<String> mobList = new ArrayList<String>();
+    public static List<Mob> mobList = new ArrayList<Mob>();
 
     @Override
     public final void onLoad() {
