@@ -5,6 +5,8 @@ author: Ludovic Merel
 commands:
   roll:
     description: Run a dice and get the value
+  hroll:
+    description: Run a hidden dice and get the value
   reloadConfig:
     description: Reload the config file
   init:

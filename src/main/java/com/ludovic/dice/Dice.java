@@ -16,11 +16,16 @@ public class Dice {
     private Random random = new Random();
     private List<Integer> diceRoll = new ArrayList<Integer>();
     private String dicePattern = "([0-9]{0,3})d([0-9]{1,3})([\\+-]?)([0-9]{1,3})?";
+    private boolean hidden = false;
 
     /**
      * Constructor
      */
     public Dice() {
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
     public int computeDice(Dice dice, String diceArgs) throws Exception {
@@ -72,7 +77,9 @@ public class Dice {
         for (int i = 0; i < rollNumber; i++) {
             this.diceRoll.add(random.nextInt((diceNumber - 1) + 1) + 1);
 
-            Bukkit.broadcastMessage("Roll " + "d" + diceNumber + ": " + this.diceRoll.get(i));
+            if (!this.hidden) {
+                Bukkit.broadcastMessage("Roll " + "d" + diceNumber + ": " + this.diceRoll.get(i));
+            }
         }
     }
 
@@ -91,11 +98,16 @@ public class Dice {
 
         switch (sign) {
             case "+":
-                Bukkit.broadcastMessage("Add mod: " + computeNumber + " + " + mod);
+                if (!this.hidden) {
+                    Bukkit.broadcastMessage("Add mod: " + computeNumber + " + " + mod);
+                }
                 computeNumber += mod;
-                break ;
+                break;
+
             case "-":
-                Bukkit.broadcastMessage("Remove mod: " + computeNumber + " - " + mod);
+                if (!this.hidden) {
+                    Bukkit.broadcastMessage("Remove mod: " + computeNumber + " - " + mod);
+                }
                 computeNumber -= mod;
                 break;
         }
