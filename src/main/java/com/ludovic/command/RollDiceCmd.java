@@ -16,6 +16,7 @@ public class RollDiceCmd implements CommandExecutor {
 
     public RollDiceCmd(Dice dice) {
         this.dice = dice;
+        dice.setHidden(false);
     }
 
     /**

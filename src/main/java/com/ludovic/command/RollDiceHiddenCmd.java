@@ -33,7 +33,12 @@ public class RollDiceHiddenCmd implements CommandExecutor {
                 commandSender.sendMessage(character.getName() + " Roll");
                 commandSender.sendMessage("");
 
-                numberGenerate = dice.computeDice(dice, args[0]);
+                if (args.length == 0) {
+                    numberGenerate = dice.computeDice(dice, "d20");
+
+                } else {
+                    numberGenerate = dice.computeDice(dice, args[0]);
+                }
 
                 commandSender.sendMessage("");
                 commandSender.sendMessage("Result: " + numberGenerate);
