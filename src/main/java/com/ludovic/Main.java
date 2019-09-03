@@ -44,9 +44,9 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
         getCommand("roll").setExecutor(new RollDiceCmd(dice));
+        getCommand("hroll").setExecutor(new RollDiceHiddenCmd(dice));
         getCommand("init").setExecutor(new InitCmd(dice));
         getCommand("life").setExecutor(new LifeCmd());
-//        getCommand("setRole").setExecutor(new SetRoleCmd());
         getCommand("reloadConfig").setExecutor(new ReloadConfigCmd());
         getCommand("setColor").setExecutor(new SetColorCmd());
     }
