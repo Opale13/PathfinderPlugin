@@ -1,21 +1,26 @@
 package com.ludovic;
 
 import com.ludovic.character.Character;
-import com.ludovic.character.RoleEnum;
 import com.ludovic.command.*;
 import com.ludovic.config.Config;
 import com.ludovic.dice.Dice;
 import com.ludovic.gui.stat.StatGui;
 import com.ludovic.listener.PlayerListener;
+import com.ludovic.utils.ReadJson;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Main extends JavaPlugin {
     public static Map<String, Character> players = new HashMap<String, Character>();
+    public static List<String> mobList = new ArrayList<String>();
 
     @Override
     public final void onLoad() {
@@ -26,6 +31,14 @@ public class Main extends JavaPlugin {
         Dice dice = new Dice();
         Config.initConfig();
         StatGui.initScoreboard();
+
+        try {
+            ReadJson.initJson();
+            ReadJson.readJson();
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 

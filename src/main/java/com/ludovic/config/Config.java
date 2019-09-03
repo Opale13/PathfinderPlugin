@@ -3,7 +3,6 @@ package com.ludovic.config;
 import com.ludovic.Main;
 import com.ludovic.character.Character;
 import com.ludovic.gui.stat.StatGui;
-import com.ludovic.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.configuration.file.FileConfiguration;
