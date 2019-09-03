@@ -86,7 +86,7 @@ public class StatGui {
      * @param character The character at set on the score
      */
     private static void setScoreboard(String uuid, Character character) {
-        scores.put(uuid, objective.getScore(character.getRole().getColor() + character.getName() + ChatColor.RESET + " - " +
+        scores.put(uuid, objective.getScore(character.getName() + ChatColor.RESET + " - " +
                 ChatColor.RED + character.getLife() + ChatColor.RESET + " - " +
                 ChatColor.BLUE + character.getInit()));
     }

@@ -1,6 +1,7 @@
 package com.ludovic.listener;
 
 import com.ludovic.Main;
+import com.ludovic.character.Character;
 import com.ludovic.config.Config;
 import com.ludovic.character.RoleEnum;
 import com.ludovic.gui.stat.StatGui;
@@ -41,8 +42,8 @@ public class PlayerListener implements Listener {
      */
     @EventHandler
     private void playerChat(AsyncPlayerChatEvent event){
-        RoleEnum role = Main.getPlayerRole(event.getPlayer());
-        event.setFormat(role.getColor() + role.getPrefix() + " " + event.getPlayer().getName() + " " + ChatColor.RESET + event.getMessage());
+        Character character = Main.players.get(event.getPlayer().getUniqueId().toString());
+        event.setFormat(character.getName() + " " + event.getMessage());
     }
 
 }

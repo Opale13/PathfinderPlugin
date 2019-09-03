@@ -1,6 +1,7 @@
 package com.ludovic.command;
 
 import com.ludovic.Main;
+import com.ludovic.character.Character;
 import com.ludovic.character.RoleEnum;
 import com.ludovic.dice.Dice;
 import org.bukkit.Bukkit;
@@ -28,7 +29,7 @@ public class RollDiceCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         Player player = Bukkit.getPlayer(commandSender.getName());
-        RoleEnum role = Main.players.get(player.getUniqueId().toString()).getRole();
+        Character character = Main.players.get(player.getUniqueId().toString());
         int numberGenerate = 0;
 
         if (commandSender instanceof Player) {
@@ -37,8 +38,7 @@ public class RollDiceCmd implements CommandExecutor {
                 Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
                 Bukkit.broadcastMessage(ChatColor.AQUA + "                 ROLL                   ");
                 Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
-                Bukkit.broadcastMessage(role.getColor() + role.getPrefix() + " " + player.getName() +
-                        ChatColor.RESET + " Roll");
+                Bukkit.broadcastMessage(character.getName() + " Roll");
                 Bukkit.broadcastMessage("");
 
                 if (args.length == 0) {

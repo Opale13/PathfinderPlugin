@@ -25,24 +25,24 @@ public class SetRoleCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
 
-        Player target = Bukkit.getPlayer(args[0]);
-        if (target == null) {
-            commandSender.sendMessage("The player was not found");
-            return false;
-        }
-
-        RoleEnum role = null;
-        try {
-            role = RoleEnum.valueOf(args[1].toUpperCase());
-        } catch (Exception e) {
-            commandSender.sendMessage("Role was not found");
-            return false;
-        }
-
-        Config.changeRole(target, role);
-        commandSender.sendMessage("The role has been change");
-        target.sendMessage("Your role has been change in " + role.getName());
-
+//        Player target = Bukkit.getPlayer(args[0]);
+//        if (target == null) {
+//            commandSender.sendMessage("The player was not found");
+//            return false;
+//        }
+//
+//        RoleEnum role = null;
+//        try {
+//            role = RoleEnum.valueOf(args[1].toUpperCase());
+//        } catch (Exception e) {
+//            commandSender.sendMessage("Role was not found");
+//            return false;
+//        }
+//
+//        Config.changeRole(target, role);
+//        commandSender.sendMessage("The role has been change");
+//        target.sendMessage("Your role has been change in " + role.getName());
+//
         return true;
     }
 

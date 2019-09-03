@@ -32,8 +32,9 @@ public class Main extends JavaPlugin {
         getCommand("roll").setExecutor(new RollDiceCmd(dice));
         getCommand("init").setExecutor(new InitCmd(dice));
         getCommand("life").setExecutor(new LifeCmd());
-        getCommand("setRole").setExecutor(new SetRoleCmd());
+//        getCommand("setRole").setExecutor(new SetRoleCmd());
         getCommand("reloadConfig").setExecutor(new ReloadConfigCmd());
+        getCommand("setColor").setExecutor(new SetColorCmd());
     }
 
     @Override
@@ -41,15 +42,15 @@ public class Main extends JavaPlugin {
         Config.saveConfig();
     }
 
-
-    /**
-     * Allows to get the role of one player
-     * @param player Player target
-     * @return
-     */
-    public static RoleEnum getPlayerRole(Player player) {
-        return getPlayerCharacter(player).getRole();
-    }
+//
+//    /**
+//     * Allows to get the role of one player
+//     * @param player Player target
+//     * @return
+//     */
+//    public static RoleEnum getPlayerRole(Player player) {
+//        return getPlayerCharacter(player).getRole();
+//    }
 
     /**
      * Return the character of the player

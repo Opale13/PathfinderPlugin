@@ -2,18 +2,16 @@ package com.ludovic.config;
 
 import com.ludovic.Main;
 import com.ludovic.character.Character;
-import com.ludovic.character.RoleEnum;
 import com.ludovic.gui.stat.StatGui;
+import com.ludovic.utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Config {
     private static FileConfiguration config;
     private static File file;
@@ -44,7 +42,7 @@ public class Config {
         String uuid = player.getUniqueId().toString();
 
         if (config.getString(uuid + ".name") == null) {
-            character = new Character(1, 0, 0, player.getName(), RoleEnum.PLAYER);
+            character = new Character(1, 0, 0, player.getName(), Color.WHITE);
             saveDataPlayer(player, character);
         }
 
@@ -55,20 +53,18 @@ public class Config {
     }
 
     /**
-     * Allows to change the role of one player
+     * Allows to change the color of one player
      * @param player Player target
-     * @param role Role target
+     * @param color Role target
      */
-    public static void changeRole(Player player, RoleEnum role) {
+    public static void changeColor(Player player, Color color) {
         String uuid = player.getUniqueId().toString();
         Character character = Main.players.get(uuid);
-        character.setRole(role);
+        character.setColor(color);
 
         Main.players.put(uuid, character);
         saveDataPlayer(player, character);
         saveConfig();
-
-        StatGui.reloadScoreboard(player);
     }
 
     public static void changeInit(Player player, int init) {
@@ -156,9 +152,16 @@ public class Config {
         int level = config.getInt(uuid + ".level");
         int life = config.getInt(uuid + ".life");
         int init = config.getInt(uuid + ".init");
-        RoleEnum role = RoleEnum.valueOf(config.getString(uuid + ".role"));
+        int red = config.getInt(uuid + ".color.RED");
+        int blue = config.getInt(uuid + ".color.BLUE");
+        int green = config.getInt(uuid + ".color.GREEN");
 
-        return new Character(level, life, init, name, role);
+        Color color = Color.WHITE;
+        color.setRed(red);
+        color.setBlue(blue);
+        color.setGreen(green);
+
+        return new Character(level, life, init, name, color);
     }
 
     /**
@@ -173,7 +176,7 @@ public class Config {
         config.set(uuid + ".level", character.getLevel());
         config.set(uuid + ".life", character.getLife());
         config.set(uuid + ".init", character.getInit());
-        config.set(uuid + ".role", character.getRole().getName().toUpperCase());
+        config.set(uuid + ".color", character.getColor());
 
         saveConfig();
     }

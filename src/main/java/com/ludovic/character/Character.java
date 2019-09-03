@@ -1,22 +1,18 @@
 package com.ludovic.character;
 
-import com.ludovic.character.RoleEnum;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.bukkit.Color;
 
 public class Character {
     private int level, life, init;
     private String name;
-    private RoleEnum role;
+    private Color color;
 
-    public Character(int level, int life, int init, String name, RoleEnum role) {
+    public Character(int level, int life, int init, String name, Color color) {
         this.level = level;
         this.life = life;
         this.init = init;
         this.name = name;
-        this.role = role;
+        this.color = color;
     }
 
     public int getLevel() {
@@ -51,11 +47,11 @@ public class Character {
         this.name = name;
     }
 
-    public RoleEnum getRole() {
-        return role;
+    public Color getColor() {
+        return color;
     }
 
-    public void setRole(RoleEnum role) {
-        this.role = role;
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

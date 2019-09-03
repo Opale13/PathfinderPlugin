@@ -1,6 +1,7 @@
 package com.ludovic.command;
 
 import com.ludovic.Main;
+import com.ludovic.character.Character;
 import com.ludovic.character.RoleEnum;
 import com.ludovic.config.Config;
 import com.ludovic.dice.Dice;
@@ -31,7 +32,7 @@ public class InitCmd implements CommandExecutor {
 
         if (commandSender instanceof Player && args.length > 0) {
             Player player = ((Player) commandSender).getPlayer();
-            RoleEnum role = Main.getPlayerRole(player);
+            Character character = Main.players.get(player.getUniqueId().toString());
             int init = 0;
 
             try {
@@ -39,8 +40,7 @@ public class InitCmd implements CommandExecutor {
                 Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
                 Bukkit.broadcastMessage(ChatColor.AQUA + "                 INIT                   ");
                 Bukkit.broadcastMessage(ChatColor.GOLD + "----------------------------------------");
-                Bukkit.broadcastMessage(role.getColor() + role.getPrefix() + " " + player.getName() +
-                        ChatColor.RESET + " Roll init");
+                Bukkit.broadcastMessage(character.getName() + " Roll init");
                 Bukkit.broadcastMessage("");
 
                 init = dice.computeDice(dice, "d20" + args[0]);

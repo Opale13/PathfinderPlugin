@@ -5,11 +5,11 @@ author: Ludovic Merel
 commands:
   roll:
     description: Run a dice and get the value
-  setRole:
-    description: Set a role of player
   reloadConfig:
     description: Reload the config file
   init:
     description: Set the init player
   life:
     description: Set the life player
+  setColor:
+    description: Set the color player
