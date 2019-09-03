@@ -28,6 +28,7 @@ public class SetColorCmd implements CommandExecutor, TabCompleter {
             if (commandSender instanceof Player) {
                 Player player = ((Player) commandSender).getPlayer();
                 Config.changeColor(player, Utils.translateColor(args[0].toUpperCase()));
+                commandSender.sendMessage("Your color has been set in " + args[0]);
             }
 
         } else {

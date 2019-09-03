@@ -152,14 +152,12 @@ public class Config {
         int level = config.getInt(uuid + ".level");
         int life = config.getInt(uuid + ".life");
         int init = config.getInt(uuid + ".init");
-        int red = config.getInt(uuid + ".color.RED");
-        int blue = config.getInt(uuid + ".color.BLUE");
-        int green = config.getInt(uuid + ".color.GREEN");
 
-        Color color = Color.WHITE;
-        color.setRed(red);
-        color.setBlue(blue);
-        color.setGreen(green);
+        // TODO find the good color component
+        int red = config.getInt(uuid + ".color.red");
+        int green = config.getInt(uuid + ".color.green");
+        int blue = config.getInt(uuid + ".color.blue");
+        Color color = Color.fromRGB(red, green, blue);
 
         return new Character(level, life, init, name, color);
     }
@@ -171,12 +169,15 @@ public class Config {
      */
     private static void saveDataPlayer(Player player, Character character) {
         String uuid = player.getUniqueId().toString();
+        Color color = character.getColor();
 
         config.set(uuid + ".name", character.getName());
         config.set(uuid + ".level", character.getLevel());
         config.set(uuid + ".life", character.getLife());
         config.set(uuid + ".init", character.getInit());
-        config.set(uuid + ".color", character.getColor());
+        config.set(uuid + ".color.red", color.getRed());
+        config.set(uuid + ".color.green", color.getGreen());
+        config.set(uuid + ".color.blue", color.getBlue());
 
         saveConfig();
     }
