@@ -1,5 +1,6 @@
 main: com.ludovic.Main
 name: PathfinderRPG
+api-version: 1.14
 version: 1.0
 author: Ludovic Merel
 commands:

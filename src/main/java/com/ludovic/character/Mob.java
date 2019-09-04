@@ -10,13 +10,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class Mob {
-    private String name, blockSet, size;
+    private String name, helmet, blockSet, size;
     private Color color;
 
-    public Mob(String name, String size, Color color, String blockSet) {
+    public Mob(String name, String helmet, String size, Color color, String blockSet) {
         this.name = name;
         this.blockSet = blockSet;
         this.color = color;
+        this.helmet = helmet;
         this.size = size;
     }
 
@@ -32,11 +33,7 @@ public class Mob {
         return color;
     }
 
-    public String getSize() {
-        return size;
-    }
-
-    public void createArmorStand(Player player, Location location, String name, Color color) {
+    public void createArmorStand(Player player, Location location) {
         Location position = location;
 
         if (size.equals("M")) {
@@ -45,24 +42,27 @@ public class Mob {
             position = location.add(0,1, 0);
         }
 
-        ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
-        LeatherArmorMeta helmetMeta = (LeatherArmorMeta) helmet.getItemMeta();
-        helmetMeta.setColor(color);
-        helmet.setItemMeta(helmetMeta);
+        ItemStack helmet = new ItemStack(Material.valueOf(this.helmet));
+        if (this.helmet.equals("LEATHER_HELMET")) {
+            LeatherArmorMeta helmetMeta = (LeatherArmorMeta) helmet.getItemMeta();
+            helmetMeta.setColor(color);
+            helmet.setItemMeta(helmetMeta);
+        }
+
 
         ItemStack chestPlate = new ItemStack(Material.LEATHER_CHESTPLATE);
         LeatherArmorMeta chestplateMeta = (LeatherArmorMeta) chestPlate.getItemMeta();
-        chestplateMeta.setColor(color);
+        chestplateMeta.setColor(this.color);
         chestPlate.setItemMeta(chestplateMeta);
 
         ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
         LeatherArmorMeta leggingsMeta = (LeatherArmorMeta) leggings.getItemMeta();
-        leggingsMeta.setColor(color);
+        leggingsMeta.setColor(this.color);
         leggings.setItemMeta(leggingsMeta);
 
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
         LeatherArmorMeta bootsMeta = (LeatherArmorMeta) boots.getItemMeta();
-        bootsMeta.setColor(color);
+        bootsMeta.setColor(this.color);
         boots.setItemMeta(bootsMeta);
 
         ArmorStand stand = (ArmorStand) player.getWorld().spawnEntity(position, EntityType.ARMOR_STAND);
@@ -74,6 +74,6 @@ public class Mob {
         stand.setBoots(boots);
         stand.setGravity(false);
         stand.setCustomNameVisible(true);
-        stand.setCustomName(name);
+        stand.setCustomName(this.name + " [" + this.size + "]");
     }
 }
