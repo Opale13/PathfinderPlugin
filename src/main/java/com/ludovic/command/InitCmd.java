@@ -13,11 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class InitCmd implements CommandExecutor {
-    private Dice dice;
+    private Dice dice = new Dice("broadcast");
 
-    public InitCmd(Dice dice) {
-        this.dice = dice;
-    }
 
     /**
      * Compute the init /init 5

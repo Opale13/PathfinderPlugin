@@ -1,9 +1,7 @@
 package com.ludovic.dice;
 
-import com.ludovic.character.RoleEnum;
-import joptsimple.ValueConversionException;
+import net.minecraft.server.v1_14_R1.IPlayerFileData;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -13,19 +11,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Dice {
+    private String display;
+    private Player player;
     private Random random = new Random();
     private List<Integer> diceRoll = new ArrayList<Integer>();
     private String dicePattern = "([0-9]{0,3})d([0-9]{1,3})([\\+-]?)([0-9]{1,3})?";
-    private boolean hidden = false;
 
     /**
      * Constructor
      */
-    public Dice() {
+    public Dice(String display) {
+        this.display = display;
     }
 
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public int computeDice(Dice dice, String diceArgs) throws Exception {
@@ -47,7 +47,7 @@ public class Dice {
             try {
                 dice.rollDice(diceNumber, Integer.parseInt(matcher.group(2)));
             } catch (Exception e) {
-                throw new Exception("Can't convert \" + matcher.group(2) + \" into number");
+                throw new Exception("Can't convert " + matcher.group(2) + " into number");
             }
 
             // Without mod like /roll 8d8
@@ -58,11 +58,11 @@ public class Dice {
             } else {
                 try {
                     numberGenerate = dice.computeMod(Integer.parseInt(matcher.group(4)), matcher.group(3));
-                } catch (Exception e) { throw new Exception("Can't convert " + matcher.group(2) + " into number"); }
+                } catch (Exception e) { throw new Exception("Can't convert " + matcher.group(4) + " into number"); }
             }
 
         } else {
-            throw new Exception("Wrong use");
+            throw new Exception("/roll (# of dice)d<# of faces>(+ or -)(mod)");
         }
 
         return numberGenerate;
@@ -77,8 +77,11 @@ public class Dice {
         for (int i = 0; i < rollNumber; i++) {
             this.diceRoll.add(random.nextInt((diceNumber - 1) + 1) + 1);
 
-            if (!this.hidden) {
+            if (display.equals("broadcast")) {
                 Bukkit.broadcastMessage("Roll " + "d" + diceNumber + ": " + this.diceRoll.get(i));
+
+            } else {
+                player.sendMessage("Roll " + "d" + diceNumber + ": " + this.diceRoll.get(i));
             }
         }
     }
@@ -98,16 +101,22 @@ public class Dice {
 
         switch (sign) {
             case "+":
-                if (!this.hidden) {
+                if (display.equals("broadcast")) {
                     Bukkit.broadcastMessage("Add mod: " + computeNumber + " + " + mod);
+                } else {
+                    player.sendMessage("Add mod: " + computeNumber + " + " + mod);
                 }
+
                 computeNumber += mod;
                 break;
 
             case "-":
-                if (!this.hidden) {
+                if (display.equals("broadcast")) {
                     Bukkit.broadcastMessage("Remove mod: " + computeNumber + " - " + mod);
+                } else {
+                    player.sendMessage("Add mod: " + computeNumber + " - " + mod);
                 }
+
                 computeNumber -= mod;
                 break;
         }

@@ -17,20 +17,15 @@ public class Main extends JavaPlugin {
     public static Map<String, Character> players = new HashMap<String, Character>();
 
     @Override
-    public final void onLoad() {
-    }
-
-    @Override
     public final void onEnable() {
-        Dice dice = new Dice();
         Config.initConfig();
         StatGui.initScoreboard();
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 
-        getCommand("roll").setExecutor(new RollDiceCmd(dice));
-        getCommand("hroll").setExecutor(new RollDiceHiddenCmd(dice));
-        getCommand("init").setExecutor(new InitCmd(dice));
+        getCommand("roll").setExecutor(new RollDiceCmd());
+        getCommand("hroll").setExecutor(new RollDiceHiddenCmd());
+        getCommand("init").setExecutor(new InitCmd());
         getCommand("life").setExecutor(new LifeCmd());
         getCommand("reloadConfig").setExecutor(new ReloadConfigCmd());
         getCommand("setColor").setExecutor(new SetColorCmd());
@@ -41,15 +36,6 @@ public class Main extends JavaPlugin {
         Config.saveConfig();
     }
 
-//
-//    /**
-//     * Allows to get the role of one player
-//     * @param player Player target
-//     * @return
-//     */
-//    public static RoleEnum getPlayerRole(Player player) {
-//        return getPlayerCharacter(player).getRole();
-//    }
 
     /**
      * Return the character of the player

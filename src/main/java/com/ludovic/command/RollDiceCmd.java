@@ -12,11 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class RollDiceCmd implements CommandExecutor {
-    private Dice dice;
-
-    public RollDiceCmd(Dice dice) {
-        this.dice = dice;
-    }
+    private Dice dice = new Dice("broadcast");
 
     /**
      * When someone role a dice, we return the value
@@ -64,8 +60,6 @@ public class RollDiceCmd implements CommandExecutor {
                 Bukkit.broadcastMessage("");
             }
 
-        } else {
-            commandSender.sendMessage("/roll (# of dice)d<# of faces>(+ or -)(mod)");
         }
 
         return true;

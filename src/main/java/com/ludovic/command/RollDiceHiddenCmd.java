@@ -10,12 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class RollDiceHiddenCmd implements CommandExecutor {
-    private Dice dice;
-
-    public RollDiceHiddenCmd(Dice dice) {
-        this.dice = dice;
-        dice.setHidden(true);
-    }
+    private Dice dice = new Dice("player");
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
@@ -24,6 +19,7 @@ public class RollDiceHiddenCmd implements CommandExecutor {
         if (commandSender instanceof Player) {
             Player player = ((Player) commandSender).getPlayer();
             Character character = Main.players.get(player.getUniqueId().toString());
+            dice.setPlayer(player);
             
             try {
                 commandSender.sendMessage("");
@@ -33,7 +29,12 @@ public class RollDiceHiddenCmd implements CommandExecutor {
                 commandSender.sendMessage(character.getName() + " Roll");
                 commandSender.sendMessage("");
 
-                numberGenerate = dice.computeDice(dice, args[0]);
+                if (args.length == 0) {
+                    numberGenerate = dice.computeDice(dice, "d20");
+
+                } else {
+                    numberGenerate = dice.computeDice(dice, args[0]);
+                }
 
                 commandSender.sendMessage("");
                 commandSender.sendMessage("Result: " + numberGenerate);
