@@ -72,7 +72,7 @@ public class PlayerListener implements Listener {
                     String blockSet = mob.getBlockSet();
 
                     if (item.getType() == Material.valueOf(blockSet.toUpperCase())) {
-                        Utils.createArmorStand(player, block.getLocation(), mob.getName(), mob.getColor());
+                        mob.createArmorStand(player, block.getLocation(), mob.getName(), mob.getColor());
                         event.setCancelled(true);
                     }
                 }

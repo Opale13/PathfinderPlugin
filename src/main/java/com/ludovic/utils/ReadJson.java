@@ -43,13 +43,13 @@ public class ReadJson {
 
             Color color = Color.fromRGB(red, green, blue);
 
-            Main.mobList.add(new Mob((String) mob.get("name"),
+            Main.mobList.add(new Mob(
+                    (String) mob.get("name"),
                     (String) mob.get("helmet"),
-                    (String) mob.get("chestplate"),
-                    (String) mob.get("leggings"),
-                    (String) mob.get("boots"),
+                    (String) mob.get("size"),
                     color,
-                    (String) mob.get("blockSet")));
+                    (String) mob.get("blockSet"))
+            );
         }
     }
 
