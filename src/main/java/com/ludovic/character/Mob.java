@@ -3,6 +3,7 @@ package com.ludovic.character;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -12,6 +13,8 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 public class Mob {
     private String name, helmet, blockSet, size;
     private Color color;
+    private Location mobLocation;
+    private String blockMaterial;
 
     public Mob(String name, String helmet, String size, Color color, String blockSet) {
         this.name = name;
@@ -21,25 +24,40 @@ public class Mob {
         this.size = size;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public String getBlockSet() {
         return blockSet;
     }
 
-    public Color getColor() {
-        return color;
+    public Location getMobLocation() {
+        return mobLocation;
     }
 
-    public void createArmorStand(Player player, Location location) {
-        Location position = location;
+    public void setMobLocation(Location mobLocation) {
+        this.mobLocation = mobLocation;
+        this.mobLocation.add(0,1,0);
+    }
+
+
+    public void createArmorStand(Player player, Block block) {
+        this.blockMaterial = block.getType().name();
+
+        Location blockLocation = block.getLocation();
+        Location position = new Location(player.getWorld(), blockLocation.getX(), blockLocation.getY(), blockLocation.getZ());
 
         if (size.equals("M")) {
-            position = location.add(0.5,1, 0.5);
+            position.add(0.5,1, 0.5);
         } else if (size.equals("G")) {
-            position = location.add(0,1, 0);
+            position.add(0,1, 0);
+
+            Block rightBottomBlock = block;
+            Block leftBottomBlock = block.getRelative(-1, 0, 0);
+            Block rightTopBlock = block.getRelative(0, 0, -1);
+            Block leftTopBlock = block.getRelative(-1, 0, -1);
+
+            rightBottomBlock.setType(Material.WHITE_WOOL);
+            leftBottomBlock.setType(Material.WHITE_WOOL);
+            rightTopBlock.setType(Material.WHITE_WOOL);
+            leftTopBlock.setType(Material.WHITE_WOOL);
         }
 
         ItemStack helmet = new ItemStack(Material.valueOf(this.helmet));
@@ -75,5 +93,12 @@ public class Mob {
         stand.setGravity(false);
         stand.setCustomNameVisible(true);
         stand.setCustomName(this.name + " [" + this.size + "]");
+    }
+
+    public void removeArmorStand(Block block) {
+        block.setType(Material.valueOf(this.blockMaterial));
+        block.getRelative(-1, 0, 0).setType(Material.valueOf(this.blockMaterial));
+        block.getRelative(0, 0, -1).setType(Material.valueOf(this.blockMaterial));
+        block.getRelative(-1, 0, -1).setType(Material.valueOf(this.blockMaterial));
     }
 }

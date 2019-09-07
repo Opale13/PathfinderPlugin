@@ -6,20 +6,18 @@ import com.ludovic.character.Mob;
 import com.ludovic.config.Config;
 import com.ludovic.gui.stat.StatGui;
 import com.ludovic.utils.Utils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class PlayerListener implements Listener {
 
@@ -72,14 +70,31 @@ public class PlayerListener implements Listener {
                     String blockSet = mob.getBlockSet();
 
                     if (item.getType() == Material.valueOf(blockSet.toUpperCase())) {
-                        mob.createArmorStand(player, block.getLocation());
+                        mob.createArmorStand(player, block);
+                        mob.setMobLocation(block.getLocation());
                         event.setCancelled(true);
                     }
                 }
             }
         }
 
-
     }
 
+    @EventHandler
+    private void entityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (event.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
+            for (Mob mob : Main.mobList) {
+                Location entityLocalisation = event.getEntity().getLocation();
+                Location mobLocalistation = mob.getMobLocation();
+
+                if (entityLocalisation.equals(mobLocalistation)) {
+                    // Take the block under the mob
+                    Block block = event.getDamager().getWorld().getBlockAt(entityLocalisation.add(0,-1,0));
+                    mob.removeArmorStand(block);
+                    break;
+                }
+            }
+        }
+    }
 }
+
