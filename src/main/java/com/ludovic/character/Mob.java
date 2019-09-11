@@ -39,6 +39,7 @@ public class Mob {
 
 
     public void createArmorStand(Player player, Block block) {
+        float standYaw = player.getLocation().getYaw() + 180;
         this.blockMaterial = block.getType().name();
 
         Location blockLocation = block.getLocation();
@@ -59,6 +60,8 @@ public class Mob {
             rightTopBlock.setType(Material.WHITE_WOOL);
             leftTopBlock.setType(Material.WHITE_WOOL);
         }
+
+        position.setYaw(standYaw);
 
         ItemStack helmet = new ItemStack(Material.valueOf(this.helmet));
         if (this.helmet.equals("LEATHER_HELMET")) {
@@ -83,7 +86,9 @@ public class Mob {
         bootsMeta.setColor(this.color);
         boots.setItemMeta(bootsMeta);
 
+
         ArmorStand stand = (ArmorStand) player.getWorld().spawnEntity(position, EntityType.ARMOR_STAND);
+
         stand.setVisible(true);
         stand.setArms(true);
         stand.setHelmet(helmet);

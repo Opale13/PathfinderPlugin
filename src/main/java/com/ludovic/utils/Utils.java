@@ -96,6 +96,8 @@ public class Utils {
 
 
     public static void createArmorStand(Player player, Location location, String name, Color color) {
+        float standYaw = player.getLocation().getYaw() + 180;
+
         ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
         LeatherArmorMeta helmetMeta = (LeatherArmorMeta) helmet.getItemMeta();
         helmetMeta.setColor(color);
@@ -116,7 +118,10 @@ public class Utils {
         bootsMeta.setColor(color);
         boots.setItemMeta(bootsMeta);
 
-        ArmorStand stand = (ArmorStand) player.getWorld().spawnEntity(location.add(0.5,1, 0.5), EntityType.ARMOR_STAND);
+        Location newLocation = location.add(0.5,1, 0.5);
+        newLocation.setYaw(standYaw);
+        ArmorStand stand = (ArmorStand) player.getWorld().spawnEntity(newLocation, EntityType.ARMOR_STAND);
+
         stand.setVisible(true);
         stand.setArms(true);
         stand.setHelmet(helmet);
