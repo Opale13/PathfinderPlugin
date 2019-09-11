@@ -126,5 +126,6 @@ public class Utils {
         stand.setGravity(false);
         stand.setCustomNameVisible(true);
         stand.setCustomName(name);
+        stand.setBasePlate(false);
     }
 }

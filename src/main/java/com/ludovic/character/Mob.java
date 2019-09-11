@@ -93,6 +93,7 @@ public class Mob {
         stand.setGravity(false);
         stand.setCustomNameVisible(true);
         stand.setCustomName(this.name + " [" + this.size + "]");
+        stand.setBasePlate(false);
     }
 
     public void removeArmorStand(Block block) {
