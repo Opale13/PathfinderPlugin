@@ -10,6 +10,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,10 +137,12 @@ public class Utils {
         String uuid = player.getUniqueId().toString();
         String value = Main.spellZone.get(uuid);
 
-        char type = value.charAt(0);
-        int range = Integer.parseInt(String.valueOf(value.charAt(1))) + 1;
+        int range = 1;
 
-        if (type == 's') {
+        if (value.contains("s")) {
+            String newValue = value.replace("s", "").trim();
+            range += Integer.parseInt(newValue);
+
             int x = 0;
             int z = 0;
             for (int i=0; i<360; i++) {
@@ -154,7 +157,22 @@ public class Utils {
             block.getRelative(0, 1, range).setType(Material.AIR);
             block.getRelative(0, 1, -range).setType(Material.AIR);
 
+        } else if (value.contains("l")) {
+            String newValue = value.replace("l", "").trim();
+            range += Integer.parseInt(newValue);
+
+            Vector playerDirection = player.getLocation().getDirection();
+            int x = (int) Math.round(playerDirection.getX());
+            int z = (int) Math.round(playerDirection.getZ());
+
+            for (int i=0; i<range; i++) {
+
+                block.getRelative(x*i, 1, z*i).setType(Material.WHITE_CARPET);
+            }
+
         }
 
     }
+
 }
+
