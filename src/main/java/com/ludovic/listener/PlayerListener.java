@@ -6,7 +6,6 @@ import com.ludovic.character.Mob;
 import com.ludovic.config.Config;
 import com.ludovic.gui.stat.StatGui;
 import com.ludovic.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -18,7 +17,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-
 public class PlayerListener implements Listener {
 
     public PlayerListener() {
@@ -32,6 +30,8 @@ public class PlayerListener implements Listener {
     private void playerJoin(PlayerJoinEvent event) {
         Config.loadPlayer(event.getPlayer());
         StatGui.updateScoreboard(event.getPlayer());
+
+        Main.spellZone.put(event.getPlayer().getUniqueId().toString(), "s1");
     }
 
     /**
@@ -64,6 +64,9 @@ public class PlayerListener implements Listener {
 
             if (item.getType() == Material.ARMOR_STAND) {
                 Utils.createArmorStand(player, block.getLocation(), character.getName(), character.getColor());
+
+            } else if (item.getType() == Material.STICK) {
+                Utils.spawnRange(player, block);
 
             } else {
                 for (Mob mob : Main.mobList) {

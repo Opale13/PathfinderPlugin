@@ -16,3 +16,5 @@ commands:
     description: Set the life player
   setColor:
     description: Set the color player
+  zone:
+    description: Define the range for a spell

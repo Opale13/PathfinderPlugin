@@ -1,17 +1,21 @@
 package com.ludovic.utils;
 
-import com.ludovic.character.Character;
+import com.ludovic.Main;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Math.toRadians;
 
 public class Utils {
     private static final List<String> colors = new ArrayList<String>() {
@@ -133,4 +137,55 @@ public class Utils {
         stand.setCustomName(name);
         stand.setBasePlate(false);
     }
+
+    public static void spawnRange(Player player, Block block) {
+        String uuid = player.getUniqueId().toString();
+        String value = Main.spellZone.get(uuid);
+
+        int range = 1;
+
+        if (value.contains("s")) {
+            String newValue = value.replace("s", "").trim();
+            range += Integer.parseInt(newValue);
+
+            int x = 0;
+            int z = 0;
+            for (int i=0; i<360; i++) {
+                x = (int) (range * Math.sin(toRadians(i)));
+                z = (int) (range * Math.cos(toRadians(i)));
+
+                if (block.getRelative(x, 1, z).getType() == Material.AIR) {
+                    block.getRelative(x, 1, z).setType(Material.WHITE_CARPET);
+                }
+            }
+
+            block.getRelative(range, 1, 0).setType(Material.AIR);
+            block.getRelative(-range, 1,0).setType(Material.AIR);
+            block.getRelative(0, 1, range).setType(Material.AIR);
+            block.getRelative(0, 1, -range).setType(Material.AIR);
+
+        } else if (value.contains("l")) {
+            String newValue = value.replace("l", "").trim();
+            range += Integer.parseInt(newValue);
+
+            Vector playerDirection = player.getLocation().getDirection();
+            int x = (int) Math.round(playerDirection.getX());
+            int z = (int) Math.round(playerDirection.getZ());
+
+            if (Math.abs(x) == 1 && Math.abs(z) == 1) {
+                range = (int) (range / 1.5) + 1;
+            }
+
+            for (int i=0; i<range; i++) {
+
+                if (block.getRelative(x*i, 1, z*i).getType() == Material.AIR) {
+                    block.getRelative(x*i, 1, z*i).setType(Material.WHITE_CARPET);
+                }
+            }
+
+        }
+
+    }
+
 }
+

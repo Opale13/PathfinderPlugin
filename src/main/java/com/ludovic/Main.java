@@ -22,6 +22,7 @@ import java.util.Map;
 public class Main extends JavaPlugin {
     public static Map<String, Character> players = new HashMap<String, Character>();
     public static List<Mob> mobList = new ArrayList<Mob>();
+    public static Map<String, String> spellZone = new HashMap<String, String>();
 
     @Override
     public final void onEnable() {
@@ -44,6 +45,7 @@ public class Main extends JavaPlugin {
         getCommand("life").setExecutor(new LifeCmd());
         getCommand("reloadConfig").setExecutor(new ReloadConfigCmd());
         getCommand("setColor").setExecutor(new SetColorCmd());
+        getCommand("zone").setExecutor(new SpellZone());
     }
 
     @Override
