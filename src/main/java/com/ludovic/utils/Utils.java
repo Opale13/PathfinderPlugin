@@ -167,6 +167,10 @@ public class Utils {
             int x = (int) Math.round(playerDirection.getX());
             int z = (int) Math.round(playerDirection.getZ());
 
+            if (Math.abs(x) == 1 && Math.abs(z) == 1) {
+                range = (int) (range / 1.5) + 1;
+            }
+
             for (int i=0; i<range; i++) {
 
                 if (block.getRelative(x*i, 1, z*i).getType() == Material.AIR) {
