@@ -1,9 +1,10 @@
 package com.ludovic.utils;
 
-import com.ludovic.character.Character;
+import com.ludovic.Main;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -12,6 +13,8 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Math.toRadians;
 
 public class Utils {
     private static final List<String> colors = new ArrayList<String>() {
@@ -127,5 +130,31 @@ public class Utils {
         stand.setCustomNameVisible(true);
         stand.setCustomName(name);
         stand.setBasePlate(false);
+    }
+
+    public static void spawnRange(Player player, Block block) {
+        String uuid = player.getUniqueId().toString();
+        String value = Main.spellZone.get(uuid);
+
+        char type = value.charAt(0);
+        int range = Integer.parseInt(String.valueOf(value.charAt(1))) + 1;
+
+        if (type == 's') {
+            int x = 0;
+            int z = 0;
+            for (int i=0; i<360; i++) {
+                x = (int) (range * Math.sin(toRadians(i)));
+                z = (int) (range * Math.cos(toRadians(i)));
+
+                block.getRelative(x, 1, z).setType(Material.WHITE_CARPET);
+            }
+
+            block.getRelative(range, 1, 0).setType(Material.AIR);
+            block.getRelative(-range, 1,0).setType(Material.AIR);
+            block.getRelative(0, 1, range).setType(Material.AIR);
+            block.getRelative(0, 1, -range).setType(Material.AIR);
+
+        }
+
     }
 }
