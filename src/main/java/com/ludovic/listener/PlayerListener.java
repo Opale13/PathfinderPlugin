@@ -71,7 +71,7 @@ public class PlayerListener implements Listener {
 
                     if (item.getType() == Material.valueOf(blockSet.toUpperCase())) {
                         mob.createArmorStand(player, block);
-                        mob.setMobLocation(block.getLocation());
+                        mob.setMobLocation(block.getLocation(), player.getLocation().getYaw());
                         event.setCancelled(true);
                     }
                 }

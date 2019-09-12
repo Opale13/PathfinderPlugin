@@ -32,9 +32,10 @@ public class Mob {
         return mobLocation;
     }
 
-    public void setMobLocation(Location mobLocation) {
+    public void setMobLocation(Location mobLocation, float yaw) {
         this.mobLocation = mobLocation;
         this.mobLocation.add(0,1,0);
+        this.mobLocation.setYaw(yaw);
     }
 
 
