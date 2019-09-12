@@ -149,7 +149,9 @@ public class Utils {
                 x = (int) (range * Math.sin(toRadians(i)));
                 z = (int) (range * Math.cos(toRadians(i)));
 
-                block.getRelative(x, 1, z).setType(Material.WHITE_CARPET);
+                if (block.getRelative(x, 1, z).getType() == Material.AIR) {
+                    block.getRelative(x, 1, z).setType(Material.WHITE_CARPET);
+                }
             }
 
             block.getRelative(range, 1, 0).setType(Material.AIR);
@@ -167,7 +169,9 @@ public class Utils {
 
             for (int i=0; i<range; i++) {
 
-                block.getRelative(x*i, 1, z*i).setType(Material.WHITE_CARPET);
+                if (block.getRelative(x*i, 1, z*i).getType() == Material.AIR) {
+                    block.getRelative(x*i, 1, z*i).setType(Material.WHITE_CARPET);
+                }
             }
 
         }
