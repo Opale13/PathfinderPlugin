@@ -32,13 +32,6 @@ public class Mob {
         return mobLocation;
     }
 
-    public void setMobLocation(Location mobLocation, float yaw) {
-        this.mobLocation = mobLocation;
-        this.mobLocation.add(0,1,0);
-        this.mobLocation.setYaw(yaw);
-    }
-
-
     public void createArmorStand(Player player, Block block) {
         float standYaw = player.getLocation().getYaw() + 180;
         this.blockMaterial = block.getType().name();
@@ -63,6 +56,7 @@ public class Mob {
         }
 
         position.setYaw(standYaw);
+        this.mobLocation = position;
 
         ItemStack helmet = new ItemStack(Material.valueOf(this.helmet));
         if (this.helmet.equals("LEATHER_HELMET")) {

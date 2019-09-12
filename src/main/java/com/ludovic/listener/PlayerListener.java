@@ -74,7 +74,6 @@ public class PlayerListener implements Listener {
 
                     if (item.getType() == Material.valueOf(blockSet.toUpperCase())) {
                         mob.createArmorStand(player, block);
-                        mob.setMobLocation(block.getLocation(), player.getLocation().getYaw());
                         event.setCancelled(true);
                     }
                 }
@@ -90,7 +89,14 @@ public class PlayerListener implements Listener {
                 Location entityLocalisation = event.getEntity().getLocation();
                 Location mobLocalistation = mob.getMobLocation();
 
-                if (entityLocalisation.equals(mobLocalistation)) {
+                double xMob = mobLocalistation.getX();
+                double yMob = mobLocalistation.getY();
+                double zMob = mobLocalistation.getZ();
+                double xEntity = entityLocalisation.getX();
+                double yEntity = entityLocalisation.getY();
+                double zEntity = entityLocalisation.getZ();
+
+                if (xMob == xEntity && zMob == zEntity && yMob == yEntity) {
                     // Take the block under the mob
                     Block block = event.getDamager().getWorld().getBlockAt(entityLocalisation.add(0,-1,0));
                     mob.removeArmorStand(block);
