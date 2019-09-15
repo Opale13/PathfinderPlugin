@@ -142,11 +142,11 @@ public class Utils {
         String uuid = player.getUniqueId().toString();
         String value = Main.spellZone.get(uuid);
 
-        int range = 1;
+        int range = 0;
 
         if (value.contains("s")) {
             String newValue = value.replace("s", "").trim();
-            range += Integer.parseInt(newValue);
+            range += Integer.parseInt(newValue) + 1;
 
             int x = 0;
             int z = 0;
@@ -176,7 +176,7 @@ public class Utils {
                 range = (int) (range / 1.5) + 1;
             }
 
-            for (int i=0; i<range; i++) {
+            for (int i=1; i<=range; i++) {
 
                 if (block.getRelative(x*i, 1, z*i).getType() == Material.AIR) {
                     block.getRelative(x*i, 1, z*i).setType(Material.WHITE_CARPET);
@@ -184,6 +184,23 @@ public class Utils {
             }
 
         }
+//        else if (value.contains("c")) {
+//            String newValue = value.replace("c", "").trim();
+//            range = Integer.parseInt(newValue);
+//
+//            Vector playerDirection = player.getLocation().getDirection();
+//            int x = (int) Math.round(playerDirection.getX());
+//            int z = (int) Math.round(playerDirection.getZ());
+//
+//            for (int i=1; i<=(int) (range/1.5); i++){
+//                if (block.getRelative(i, 1, i).getType() == Material.AIR) {
+//                    block.getRelative(i, 1, i).setType(Material.WHITE_CARPET);
+//                }
+//                if (block.getRelative(i, 1, i).getType() == Material.AIR) {
+//                    block.getRelative(i, 1, i).setType(Material.WHITE_CARPET);
+//                }
+//            }
+//        }
 
     }
 
